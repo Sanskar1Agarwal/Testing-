@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Muskan ❤️🎂</title>
+<title>Birthday Surprise for Muskan 🎂</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body{
   margin:0;
@@ -15,20 +14,20 @@ body{
   overflow:hidden;
 }
 
+/* Sections */
 section{
   display:none;
   min-height:100vh;
   padding:30px;
   animation:fadeSlide 1s ease;
 }
-
 section.active{display:block;}
-
 @keyframes fadeSlide{
   from{opacity:0; transform:translateY(30px);}
   to{opacity:1; transform:translateY(0);}
 }
 
+/* Buttons and inputs */
 button{
   padding:14px 28px;
   border:none;
@@ -39,7 +38,6 @@ button{
   cursor:pointer;
   margin:15px;
 }
-
 input{
   padding:12px;
   border-radius:20px;
@@ -47,9 +45,9 @@ input{
   text-align:center;
 }
 
+/* Glowing text */
 h1{font-size:2.4em;}
 p{max-width:620px;margin:auto;font-size:1.1em;}
-
 .glow{
   animation:glow 2s infinite alternate;
 }
@@ -58,7 +56,7 @@ p{max-width:620px;margin:auto;font-size:1.1em;}
   to{text-shadow:0 0 30px #ff99aa;}
 }
 
-/* floating hearts */
+/* Floating hearts background */
 .heart{
   position:absolute;
   animation:float 6s linear infinite;
@@ -68,14 +66,7 @@ p{max-width:620px;margin:auto;font-size:1.1em;}
   100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}
 }
 
-/* gallery */
-.gallery img{
-  width:220px;
-  border-radius:20px;
-  box-shadow:0 0 25px rgba(255,255,255,0.25);
-}
-
-/* cards */
+/* Cards */
 .cards{
   display:flex;
   justify-content:center;
@@ -96,7 +87,7 @@ p{max-width:620px;margin:auto;font-size:1.1em;}
 }
 .card:hover{transform:scale(1.1);}
 
-/* game */
+/* Game area */
 #gameArea{
   position:relative;
   height:60vh;
@@ -115,7 +106,7 @@ p{max-width:620px;margin:auto;font-size:1.1em;}
   100%{transform:scale(1);}
 }
 
-/* fireworks */
+/* Fireworks */
 .firework{
   position:absolute;
   width:6px;
@@ -128,20 +119,81 @@ p{max-width:620px;margin:auto;font-size:1.1em;}
   to{transform:scale(6);opacity:0;}
 }
 
-/* mute */
+/* Mute button */
 #muteBtn{
   position:fixed;
   top:10px;
   right:10px;
   z-index:100;
 }
+
+/* Birthday cake */
+#cake{
+  position:relative;
+  margin:30px auto;
+  width:200px;
+  height:120px;
+}
+.cake-layer{
+  position:absolute;
+  width:100%;
+  height:60px;
+  background:#ff4d6d;
+  border-radius:20px 20px 0 0;
+  bottom:0;
+  left:0;
+  z-index:1;
+}
+.cake-layer:nth-child(2){height:40px; bottom:60px; background:#ff758c; z-index:2;}
+.cake-layer:nth-child(3){height:20px; bottom:100px; background:#ff99aa; z-index:3;}
+
+/* Cake slices overlay */
+.slice{
+  position:absolute;
+  width:33.33%;
+  height:100%;
+  background:rgba(0,0,0,0);
+  cursor:pointer;
+}
+.slice:nth-child(1){left:0;}
+.slice:nth-child(2){left:33.33%;}
+.slice:nth-child(3){left:66.66%;}
+
+/* Slice cut animation */
+.cut{
+  animation:cutSlice 0.8s forwards;
+}
+@keyframes cutSlice{
+  0%{transform:translateY(0) rotate(0deg); opacity:1;}
+  100%{transform:translateY(150px) rotate(30deg); opacity:0;}
+}
+
+/* Confetti */
+.confetti{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:hsl(0,100%,50%);
+  border-radius:50%;
+  animation:confettiFall 1s linear forwards;
+}
+@keyframes confettiFall{
+  0%{opacity:1; transform:translateY(0);}
+  100%{opacity:0; transform:translateY(150px);}
+}
+
+/* Birthday image */
+.birthday-img{
+  width:250px;
+  border-radius:20px;
+  box-shadow:0 0 25px rgba(255,255,255,0.25);
+  margin-top:20px;
+}
 </style>
 </head>
-
 <body>
 
 <button id="muteBtn" onclick="toggleMusic()">🔊</button>
-
 <audio id="bgm" loop>
   <source src="song.mp3" type="audio/mpeg">
 </audio>
@@ -154,38 +206,15 @@ p{max-width:620px;margin:auto;font-size:1.1em;}
   <button onclick="checkCode()">Enter</button>
 </section>
 
-<!-- AI -->
-<section id="s1">
-  <h1 class="glow">Muskan 💖</h1>
-  <p>AI Result: One of a kind ✨</p>
-  <button onclick="next(2)">Continue</button>
-</section>
-
-<!-- VALENTINE -->
-<section id="s2">
-  <h1>Happy Valentine’s Day ❤️</h1>
-  <p>You make everything feel warmer just by being here 💕</p>
-  <button onclick="next(3)">Next</button>
-</section>
-
-<!-- GALLERY -->
-<section id="s3">
-  <h1>Memory 📸</h1>
-  <div class="gallery">
-    <img src="muskan.jpg" alt="Muskan">
-  </div>
-  <button onclick="next(4)">Next</button>
-</section>
-
 <!-- COUNTDOWN -->
-<section id="s4">
+<section id="s1">
   <h1>Birthday Countdown ⏳</h1>
   <p id="timer"></p>
-  <button onclick="next(5)">Play Game 🎮</button>
+  <button onclick="next(2)">Play Game 🎮</button>
 </section>
 
 <!-- GAME -->
-<section id="s5">
+<section id="s2">
   <h1>Collect 7 Hearts 💖</h1>
   <p>Time Left: <span id="time">30</span>s</p>
   <div id="gameArea"></div>
@@ -193,140 +222,81 @@ p{max-width:620px;margin:auto;font-size:1.1em;}
 </section>
 
 <!-- CARDS -->
-<section id="s6">
+<section id="s3">
   <h1>Open When… 🎁</h1>
   <div class="cards">
     <div class="card" onclick="alert('You are deeply loved ❤️')">Sad</div>
     <div class="card" onclick="alert('You are stronger than you know 💪')">Tired</div>
-    <div class="card" onclick="next(7)">Birthday 🎂</div>
+    <div class="card" onclick="next(4)">Birthday 🎂</div>
   </div>
 </section>
 
 <!-- BIRTHDAY -->
-<section id="s7">
+<section id="s4">
   <h1 class="glow">🎉 HAPPY BIRTHDAY MUSKAN 🎂</h1>
-  <p>May your life shine as bright as your smile ✨</p>
+  <div id="cake">
+    <div class="cake-layer"></div>
+    <div class="cake-layer"></div>
+    <div class="cake-layer"></div>
+    <div class="slice" onclick="cutSlice(this)"></div>
+    <div class="slice" onclick="cutSlice(this)"></div>
+    <div class="slice" onclick="cutSlice(this)"></div>
+  </div>
+  <img src="muskan.jpg" class="birthday-img" alt="Muskan">
 </section>
 
 <script>
-/* 🎵 music */
-let music=document.getElementById("bgm");
-music.volume=0;
+/* Music */
+let music=document.getElementById("bgm"); music.volume=0;
+function fadeInMusic(){let v=0; let fade=setInterval(()=>{if(v>=1){clearInterval(fade);} music.volume=v; v+=0.05;},200);}
+function toggleMusic(){music.muted=!music.muted; muteBtn.innerText=music.muted?"🔇":"🔊";}
+function checkCode(){if(code.value==="0802"){music.play(); fadeInMusic(); next(1);}else alert("Wrong code ❌");}
 
-function fadeInMusic(){
-  let v=0;
-  let fade=setInterval(()=>{
-    if(v>=1){clearInterval(fade);}
-    music.volume=v;
-    v+=0.05;
-  },200);
-}
-
-function toggleMusic(){
-  music.muted=!music.muted;
-  muteBtn.innerText=music.muted?"🔇":"🔊";
-}
-
-function checkCode(){
-  if(code.value==="0802"){
-    music.play();
-    fadeInMusic();
-    next(1);
-  }else alert("Wrong code ❌");
-}
-
-/* navigation */
+/* Navigation */
 function next(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById("s"+n).classList.add("active");
-
-  if(n===5) startGame();
-  if(n===7) fireworks();
+  if(n===2) startGame();
+  if(n===4) fireworks();
 }
 
-/* floating hearts */
-setInterval(()=>{
-  let h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=Math.random()*22+14+"px";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
-},350);
+/* Floating hearts */
+setInterval(()=>{let h=document.createElement("div"); h.className="heart"; h.innerHTML="❤️"; h.style.left=Math.random()*100+"vw"; h.style.fontSize=Math.random()*22+14+"px"; document.body.appendChild(h); setTimeout(()=>h.remove(),6000);},350);
 
-/* countdown + auto unlock */
+/* Countdown + auto birthday unlock */
 const target=new Date("2026-02-08T00:00:00").getTime();
-setInterval(()=>{
-  let d=target-new Date().getTime();
-  if(d<=0){
-    next(7);
-    return;
+setInterval(()=>{let d=target-new Date().getTime(); if(d<=0){next(4); return;} timer.innerText=
+  Math.floor(d/86400000)+"d "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s";},1000);
+
+/* Game */
+let score=0,time=30,gameInterval,timerInterval;
+function startGame(){score=0; time=30; document.getElementById("score").innerText=score; document.getElementById("time").innerText=time; gameArea.innerHTML="";
+gameInterval=setInterval(spawnHeart,900); timerInterval=setInterval(()=>{time--; document.getElementById("time").innerText=time; if(time<=0){clearInterval(gameInterval); clearInterval(timerInterval); alert("Time up! Try again 💕");}},1000);}
+function spawnHeart(){let h=document.createElement("div"); h.className="gameHeart"; h.innerHTML="💖"; h.style.left=Math.random()*85+"%"; h.style.top=Math.random()*75+"%";
+h.onclick=()=>{score++; document.getElementById("score").innerText=score; h.remove(); if(score===7){clearInterval(gameInterval); clearInterval(timerInterval); next(3);}}; gameArea.appendChild(h); setTimeout(()=>h.remove(),1500);}
+
+/* Fireworks */
+function fireworks(){setInterval(()=>{let f=document.createElement("div"); f.className="firework"; f.style.left=Math.random()*100+"vw"; f.style.top=Math.random()*60+"vh"; f.style.background=`hsl(${Math.random()*360},100%,50%)`; document.body.appendChild(f); setTimeout(()=>f.remove(),1200);},200);}
+
+/* Cake slice cutting */
+function cutSlice(slice){
+  if(slice.classList.contains("cut")) return;
+  slice.classList.add("cut");
+  createConfetti(slice);
+}
+
+/* Confetti burst */
+function createConfetti(slice){
+  for(let i=0;i<10;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=(slice.offsetLeft + Math.random()*slice.offsetWidth)+"px";
+    c.style.top=(slice.offsetTop)+"px";
+    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    document.getElementById("cake").appendChild(c);
+    setTimeout(()=>c.remove(),1000);
   }
-  timer.innerText=
-    Math.floor(d/86400000)+"d "+
-    Math.floor((d%86400000)/3600000)+"h "+
-    Math.floor((d%3600000)/60000)+"m "+
-    Math.floor((d%60000)/1000)+"s";
-},1000);
-
-/* 🎮 GAME (FIXED) */
-let score=0,time=30;
-let gameInterval,timerInterval;
-
-function startGame(){
-  score=0;
-  time=30;
-  document.getElementById("score").innerText=score;
-  document.getElementById("time").innerText=time;
-  gameArea.innerHTML="";
-
-  gameInterval=setInterval(spawnHeart,900);
-
-  timerInterval=setInterval(()=>{
-    time--;
-    document.getElementById("time").innerText=time;
-    if(time<=0){
-      clearInterval(gameInterval);
-      clearInterval(timerInterval);
-      alert("Time up! Try again 💕");
-    }
-  },1000);
-}
-
-function spawnHeart(){
-  let h=document.createElement("div");
-  h.className="gameHeart";
-  h.innerHTML="💖";
-  h.style.left=Math.random()*85+"%";
-  h.style.top=Math.random()*75+"%";
-  h.onclick=()=>{
-    score++;
-    document.getElementById("score").innerText=score;
-    h.remove();
-    if(score===7){
-      clearInterval(gameInterval);
-      clearInterval(timerInterval);
-      next(6);
-    }
-  };
-  gameArea.appendChild(h);
-  setTimeout(()=>h.remove(),1500);
-}
-
-/* 🎆 fireworks */
-function fireworks(){
-  setInterval(()=>{
-    let f=document.createElement("div");
-    f.className="firework";
-    f.style.left=Math.random()*100+"vw";
-    f.style.top=Math.random()*60+"vh";
-    f.style.background=`hsl(${Math.random()*360},100%,50%)`;
-    document.body.appendChild(f);
-    setTimeout(()=>f.remove(),1200);
-  },200);
 }
 </script>
-
 </body>
 </html>
