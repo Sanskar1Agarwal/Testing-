@@ -92,7 +92,7 @@ p{max-width:600px;margin:auto;font-size:1.1em;}
   cursor:pointer;
 }
 
-/* mute */
+/* mute button */
 #muteBtn{
   position:fixed;
   top:10px;
@@ -130,7 +130,10 @@ p{max-width:600px;margin:auto;font-size:1.1em;}
 <!-- VALENTINE -->
 <section id="s2">
 <h1>Happy Valentine’s Day ❤️</h1>
-<p>You bring warmth, smiles, and meaning just by being you.</p>
+<p>
+You make ordinary moments feel magical.  
+This page exists just to remind you of that 💕
+</p>
 <button onclick="next(3)">Next</button>
 </section>
 
@@ -172,23 +175,34 @@ p{max-width:600px;margin:auto;font-size:1.1em;}
 <!-- BIRTHDAY -->
 <section id="s7">
 <h1>🎉 HAPPY BIRTHDAY 🎂</h1>
-<p>May your life be full of love, dreams, and happiness ✨</p>
+<p>
+May your life be filled with love, laughter,  
+and dreams coming true ✨
+</p>
 <p style="font-size:2em;">🎈🎁🎉</p>
 </section>
 
 <script>
 /* music */
 let music=document.getElementById("bgm");
+let muteBtn=document.getElementById("muteBtn");
 function toggleMusic(){
-  if(music.muted){music.muted=false;muteBtn.innerText="🔊";}
-  else{music.muted=true;muteBtn.innerText="🔇";}
+  if(music.muted){
+    music.muted=false;
+    muteBtn.innerText="🔊";
+  }else{
+    music.muted=true;
+    muteBtn.innerText="🔇";
+  }
 }
 
 /* password */
 function checkCode(){
   if(document.getElementById("code").value==="YOUR_SECRET_CODE"){
     next(1);
-  }else alert("Wrong code ❌");
+  }else{
+    alert("Wrong code ❌");
+  }
 }
 
 /* navigation */
@@ -215,7 +229,8 @@ setInterval(()=>{
   let d=target-now;
   document.getElementById("timer").innerText=
     Math.floor(d/86400000)+" days "+
-    Math.floor((d%86400000)/3600000)+" hrs";
+    Math.floor((d%86400000)/3600000)+" hrs "+
+    Math.floor((d%3600000)/60000)+" min";
 },1000);
 
 /* game */
