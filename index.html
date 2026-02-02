@@ -46,6 +46,9 @@ input{
   text-align:center;
 }
 
+h1{font-size:2.4em;}
+p{max-width:620px;margin:auto;font-size:1.1em;}
+
 .glow{
   animation:glow 2s infinite alternate;
 }
@@ -62,6 +65,13 @@ input{
 @keyframes float{
   0%{transform:translateY(100vh) rotate(0deg);opacity:1;}
   100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}
+}
+
+/* gallery */
+.gallery img{
+  width:220px;
+  border-radius:20px;
+  box-shadow:0 0 25px rgba(255,255,255,0.25);
 }
 
 /* game */
@@ -83,25 +93,6 @@ input{
   100%{transform:scale(1);}
 }
 
-/* cards */
-.cards{
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-}
-.card{
-  width:200px;
-  height:120px;
-  background:#ff758c;
-  border-radius:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  font-weight:bold;
-}
-
 /* fireworks */
 .firework{
   position:absolute;
@@ -115,7 +106,6 @@ input{
   to{transform:scale(6);opacity:0;}
 }
 
-/* mute */
 #muteBtn{
   position:fixed;
   top:10px;
@@ -133,15 +123,15 @@ input{
   <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<!-- SECRET CODE + COUNTDOWN -->
+<!-- SECRET PAGE -->
 <section class="active" id="s0">
   <h1>🔐 Private Access</h1>
   <input id="code" placeholder="Secret code">
   <br>
   <button onclick="checkCode()">Enter</button>
 
-  <h2 style="margin-top:30px">🎂 Birthday Countdown</h2>
-  <p id="timer" class="glow"></p>
+  <h2 style="margin-top:30px;">🎂 Birthday Countdown</h2>
+  <p id="timer"></p>
 </section>
 
 <!-- AI -->
@@ -151,22 +141,21 @@ input{
   <button onclick="next(2)">Continue</button>
 </section>
 
-<!-- GAME -->
+<!-- IMAGE -->
 <section id="s2">
-  <h1>Collect 7 Hearts 💖</h1>
+  <h1>Memory 📸</h1>
+  <div class="gallery">
+    <img src="muskan.jpg" alt="Muskan">
+  </div>
+  <button onclick="next(3)">Next</button>
+</section>
+
+<!-- GAME -->
+<section id="s3">
+  <h1>Collect 29 Hearts 💖</h1>
   <p>Time Left: <span id="time">30</span>s</p>
   <div id="gameArea"></div>
   <p>Score: <span id="score">0</span> / 7</p>
-</section>
-
-<!-- CARDS -->
-<section id="s3">
-  <h1>Open When… 🎁</h1>
-  <div class="cards">
-    <div class="card" onclick="alert('You are deeply loved ❤️')">Sad</div>
-    <div class="card" onclick="alert('You are stronger than you know 💪')">Tired</div>
-    <div class="card" onclick="openBirthday()">Birthday 🎂</div>
-  </div>
 </section>
 
 <!-- BIRTHDAY -->
@@ -176,7 +165,6 @@ input{
 </section>
 
 <script>
-/* 🎵 Music */
 let music=document.getElementById("bgm");
 music.volume=0;
 
@@ -194,36 +182,46 @@ function toggleMusic(){
   muteBtn.innerText=music.muted?"🔇":"🔊";
 }
 
-/* 🔐 Secret Code */
+let birthdayUnlocked=false;
+
 function checkCode(){
-  if(code.value==="0802"){
+  if(code.value==="14052018"){
     music.play();
     fadeInMusic();
     next(1);
-  } else alert("Wrong code ❌");
+  }else alert("Wrong code ❌");
 }
 
-/* 🔒 Birthday Lock */
-let birthdayUnlocked=false;
-
-/* Navigation */
 function next(n){
   if(n===4 && !birthdayUnlocked){
-    alert("🎂 Birthday is locked!");
+    alert("Birthday is locked 🎂");
     return;
   }
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById("s"+n).classList.add("active");
-  if(n===2) startGame();
+
+  if(n===3) startGame();
+  if(n===4) fireworks();
 }
 
-/* 🎂 Countdown on Secret Page */
+/* floating hearts */
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=Math.random()*22+14+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},350);
+
+/* countdown */
 const target=new Date("2026-02-08T00:00:00").getTime();
 setInterval(()=>{
   let d=target-new Date().getTime();
   if(d<=0){
     birthdayUnlocked=true;
-    timer.innerText="🎉 It's Birthday Time!";
+    timer.innerText="🎉 It's Her Birthday!";
     return;
   }
   timer.innerText=
@@ -233,19 +231,19 @@ setInterval(()=>{
     Math.floor((d%60000)/1000)+"s";
 },1000);
 
-/* 🎮 Game */
-let score=0,time=30;
-let gameInterval,timerInterval;
+/* GAME */
+let score=0,time=30,gameInterval,timerInterval;
 
 function startGame(){
   score=0; time=30;
-  scoreEl.innerText=score;
-  timeEl.innerText=time;
+  scoreSpan.innerText=score;
+  timeSpan.innerText=time;
   gameArea.innerHTML="";
 
-  gameInterval=setInterval(spawnHeart,800);
+  gameInterval=setInterval(spawnHeart,900);
   timerInterval=setInterval(()=>{
-    time--; timeEl.innerText=time;
+    time--;
+    timeSpan.innerText=time;
     if(time<=0){
       clearInterval(gameInterval);
       clearInterval(timerInterval);
@@ -254,9 +252,6 @@ function startGame(){
   },1000);
 }
 
-const scoreEl=document.getElementById("score");
-const timeEl=document.getElementById("time");
-
 function spawnHeart(){
   let h=document.createElement("div");
   h.className="gameHeart";
@@ -264,29 +259,24 @@ function spawnHeart(){
   h.style.left=Math.random()*85+"%";
   h.style.top=Math.random()*75+"%";
   h.onclick=()=>{
-    score++; scoreEl.innerText=score; h.remove();
+    score++;
+    scoreSpan.innerText=score;
+    h.remove();
     if(score===7){
+      birthdayUnlocked=true;
       clearInterval(gameInterval);
       clearInterval(timerInterval);
-      birthdayUnlocked=true;
-      next(3);
+      next(4);
     }
   };
   gameArea.appendChild(h);
   setTimeout(()=>h.remove(),1500);
 }
 
-/* 🎂 Birthday Button */
-function openBirthday(){
-  if(birthdayUnlocked){
-    next(4);
-    fireworks();
-  } else {
-    alert("🎂 Not yet!");
-  }
-}
+const scoreSpan=document.getElementById("score");
+const timeSpan=document.getElementById("time");
 
-/* 🎆 Fireworks */
+/* fireworks */
 function fireworks(){
   setInterval(()=>{
     let f=document.createElement("div");
